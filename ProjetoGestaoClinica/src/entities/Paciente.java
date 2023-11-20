@@ -69,8 +69,8 @@ public class Paciente {
 		return formaPagamento;
 	}
 
-	public void setFormaPagamento(String formaPagamento) {
-		this.formaPagamento = formaPagamento;
+	public void setFormaPagamento(Object object) {
+		this.formaPagamento = (String) object;
 	}
 
 	public String getLogradouro() {
@@ -101,8 +101,8 @@ public class Paciente {
 		return uf;
 	}
 
-	public void setUf(String uf) {
-		this.uf = uf;
+	public void setUf(Object object) {
+		this.uf = (String) object;
 	}
 
 	public int getNumero() {
