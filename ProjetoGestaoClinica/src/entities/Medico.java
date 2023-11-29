@@ -90,8 +90,8 @@ public class Medico {
 		return uf;
 	}
 
-	public void setUf(String uf) {
-		this.uf = uf;
+	public void setUf(Object object) {
+		this.uf = (String) object;
 	}
 
 	public int getNumero() {

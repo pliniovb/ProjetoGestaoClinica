@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.awt.Color;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
@@ -76,6 +77,11 @@ public class PacienteWindow extends JFrame {
 
 	
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -111,18 +117,6 @@ public class PacienteWindow extends JFrame {
 		}
 	}
 	
-	/*private void criarMascaraTelefone() {
-
-		try {
-
-			this.mascaraData = new MaskFormatter("(##)#####-####");
-
-		} catch (ParseException e) {
-
-			System.out.println("ERRO: " + e.getMessage());
-		}
-	}*/
-	
 	private void cadastrarPaciente() {
 
 		try {
@@ -147,7 +141,7 @@ public class PacienteWindow extends JFrame {
 
 		} catch (SQLException | IOException | ParseException | NumberFormatException e) {
 
-			JOptionPane.showMessageDialog(null, "Erro ao cadastrar um novo aluno.", "Cadastro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Erro ao cadastrar um novo paciente.", "Cadastro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -249,7 +243,8 @@ public class PacienteWindow extends JFrame {
 		rbFeminino.setBounds(6, 75, 103, 21);
 		painelSexo.add(rbFeminino);
 		
-		txtTelefone = new JFormattedTextField(mascaraData);
+		txtTelefone = new JFormattedTextField();
+		txtTelefone.setText("(  )        -    ");
 		txtTelefone.setBounds(380, 376, 116, 23);
 		contentPane.add(txtTelefone);
 		
