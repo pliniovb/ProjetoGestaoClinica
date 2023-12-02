@@ -44,12 +44,29 @@ public class MedicoDAOTeste {
 		}
 	}
 
-	public static void buscarPorCRMTeste() throws SQLException, IOException {
+	public static void buscarPorCrmTeste() throws SQLException, IOException {
 
 		int crm = 1;
 
 		Connection conn = BancoDados.conectar();
-		Medico medico = new MedicoDAO(conn).buscarPorCRM(crm);
+		Medico medico = new MedicoDAO(conn).buscarPorCrm(crm);
+
+		if (medico != null) {
+
+			System.out.println(medico.getCrm() + " - " + medico.getNome() + " - " + medico.getLogradouro() + " - " + medico.getBairro() + " - " + medico.getCidade() + " - " + medico.getUf() + " - " + medico.getNumero() + " - " + medico.getTelefone() + " - " + medico.getEspecialidade().getCodigo());
+
+		} else {
+
+			System.out.println("CRM não encontrado.");
+		}
+	}
+	
+	public static void buscarPorNomeTeste() throws SQLException, IOException {
+
+		String nomeMedico = "João Paulo";
+
+		Connection conn = BancoDados.conectar();
+		Medico medico = new MedicoDAO(conn).buscarPorNome(nomeMedico);
 
 		if (medico != null) {
 
@@ -108,7 +125,8 @@ public class MedicoDAOTeste {
 			
 			//MedicoDAOTeste.cadastrarMedicoTeste();
 			MedicoDAOTeste.buscarTodosMedicosTeste();
-			//MedicoDAOTeste.buscarPorCRMTeste();
+			//MedicoDAOTeste.buscarPorCrmTeste();
+			//MedicoDAOTeste.buscarPorNomeTeste();
 			//MedicoDAOTeste.atualizarMedicoTeste();
 			//MedicoDAOTeste.excluirMedicoTeste();
 

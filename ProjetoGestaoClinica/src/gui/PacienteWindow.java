@@ -72,6 +72,7 @@ public class PacienteWindow extends JFrame {
 	private JButton btnCadastrar;
 	
 	private MaskFormatter mascaraData;
+	private MaskFormatter mascaraTelefone;
 	private PacienteService pacienteService;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
@@ -98,7 +99,7 @@ public class PacienteWindow extends JFrame {
 	public PacienteWindow() {
 		
 		this.criarMascaraData();
-		//this.criarMascaraTelefone();
+		this.criarMascaraTelefone();
 		this.initComponents();
 		
 		this.pacienteService = new PacienteService();
@@ -110,6 +111,18 @@ public class PacienteWindow extends JFrame {
 		try {
 
 			this.mascaraData = new MaskFormatter("##/##/####");
+
+		} catch (ParseException e) {
+
+			System.out.println("ERRO: " + e.getMessage());
+		}
+	}
+	
+	private void criarMascaraTelefone() {
+
+		try {
+
+			this.mascaraTelefone = new MaskFormatter("(##)#####-####");
 
 		} catch (ParseException e) {
 
@@ -243,8 +256,7 @@ public class PacienteWindow extends JFrame {
 		rbFeminino.setBounds(6, 75, 103, 21);
 		painelSexo.add(rbFeminino);
 		
-		txtTelefone = new JFormattedTextField();
-		txtTelefone.setText("(  )        -    ");
+		txtTelefone = new JFormattedTextField(mascaraTelefone);
 		txtTelefone.setBounds(380, 376, 116, 23);
 		contentPane.add(txtTelefone);
 		

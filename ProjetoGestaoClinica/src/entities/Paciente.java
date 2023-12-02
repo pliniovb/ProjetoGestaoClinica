@@ -112,5 +112,9 @@ public class Paciente {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
+	
+	public String toString() {
+		return this.getNome();
+	}
 
 }

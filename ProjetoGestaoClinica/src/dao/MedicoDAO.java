@@ -85,7 +85,7 @@ public class MedicoDAO {
 		}
 	}
 
-	public Medico buscarPorCRM(int crm) throws SQLException {
+	public Medico buscarPorCrm(int crm) throws SQLException {
 
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -95,6 +95,46 @@ public class MedicoDAO {
 			st = conn.prepareStatement("select * from medico where crm = ?");
 
 			st.setInt(1, crm);
+
+			rs = st.executeQuery();
+
+			if (rs.next()) {
+
+				Medico medico = new Medico();
+				
+				medico.setCrm(rs.getInt("crm"));
+				medico.setNome(rs.getString("nome"));
+				medico.setLogradouro(rs.getString("logradouro"));
+				medico.setBairro(rs.getString("bairro"));
+				medico.setCidade(rs.getString("cidade"));
+				medico.setUf(rs.getString("uf"));
+				medico.setNumero(rs.getInt("numero"));
+				medico.setTelefone(rs.getString("telefone"));
+				medico.getEspecialidade().setCodigo(rs.getInt("codigo_especialidade"));
+
+				return medico;
+			}
+
+			return null;
+
+		} finally {
+
+			BancoDados.finalizarStatement(st);
+			BancoDados.finalizarResultSet(rs);
+			BancoDados.desconectar();
+		}
+	}
+	
+	public Medico buscarPorNome(String nomeMedico) throws SQLException {
+
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+
+			st = conn.prepareStatement("select * from medico where crm = ?");
+
+			st.setString(1, nomeMedico);
 
 			rs = st.executeQuery();
 
