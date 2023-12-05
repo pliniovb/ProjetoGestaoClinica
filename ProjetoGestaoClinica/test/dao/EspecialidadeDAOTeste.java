@@ -13,7 +13,7 @@ public class EspecialidadeDAOTeste {
 	public static void cadastrarEspecialidadeTeste() throws SQLException, IOException {
 
 		Especialidade especialidade = new Especialidade();
-		especialidade.setNome("teste");
+		especialidade.setNome("Pediatra");
 
 		Connection conn = BancoDados.conectar();
 		new EspecialidadeDAO(conn).cadastrar(especialidade);

@@ -16,16 +16,16 @@ public class PacienteDAOTeste {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		Paciente paciente = new Paciente();
-		paciente.setNome("Isabella Novaes");
+		paciente.setNome("João Paulo");
 		paciente.setSexo("Feminino");
-		paciente.setDataNascimento(new java.sql.Date(sdf.parse("25/06/2003").getTime()));
-		paciente.setLogradouro("Rua Coronel Dulcídio");
+		paciente.setDataNascimento(new java.sql.Date(sdf.parse("29/08/2005").getTime()));
+		paciente.setLogradouro("Rua Balduíno Taques");
 		paciente.setBairro("Centro");
 		paciente.setCidade("Ponta Grossa");
 		paciente.setUf("PR");
-		paciente.setNumero(1602);
-		paciente.setTelefone("(11)95329-5838");
-		paciente.setFormaPagamento("Débito");
+		paciente.setNumero(850);
+		paciente.setTelefone("(11)92814-5178");
+		paciente.setFormaPagamento("Pix");
 
 		Connection conn = BancoDados.conectar();
 		new PacienteDAO(conn).cadastrar(paciente);
