@@ -53,7 +53,7 @@ public class PacienteWindow extends JFrame {
 	private JTextField txtCidade;
 	private JRadioButton rbMasculino;
 	private JRadioButton rbFeminino;
-	private JComboBox cbFormaPagamento;
+	private JComboBox<Object> cbFormaPagamento;
 	private JComboBox cbUf;
 	private JLabel lblNome;
 	private JLabel lblDataNascimento;
@@ -147,6 +147,7 @@ public class PacienteWindow extends JFrame {
 			
 			paciente.setUf(this.cbUf.getSelectedItem());
 			paciente.setNumero(Integer.parseInt(this.txtNumero.getText()));
+			paciente.setTelefone(this.txtTelefone.getText());
 			paciente.setFormaPagamento(this.cbFormaPagamento.getSelectedItem());
 
 			this.pacienteService.cadastrar(paciente);
@@ -233,8 +234,8 @@ public class PacienteWindow extends JFrame {
 		txtDataNascimento.setBounds(573, 25, 88, 23);
 		contentPane.add(txtDataNascimento);
 		
-		cbFormaPagamento = new JComboBox();
-		cbFormaPagamento.setModel(new DefaultComboBoxModel(new String[] {"", "Dinheiro", "Crédito", "Boleto", "Pix", "Débito"}));
+		cbFormaPagamento = new JComboBox<Object>();
+		cbFormaPagamento.setModel(new DefaultComboBoxModel<Object>(new String[] {"", "Dinheiro", "Crédito", "Boleto", "Pix", "Débito"}));
 		cbFormaPagamento.setBounds(161, 376, 131, 23);
 		contentPane.add(cbFormaPagamento);
 		

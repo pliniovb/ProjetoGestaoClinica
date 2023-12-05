@@ -38,7 +38,7 @@ public class BancoDados {
 
 		FileInputStream propriedadesBanco = null;
 
-		propriedadesBanco = new FileInputStream("database.properties");
+		propriedadesBanco = new FileInputStream("ProjetoGEstaoClinica/database.properties");
 
 		Properties props = new Properties();
 		props.load(propriedadesBanco);

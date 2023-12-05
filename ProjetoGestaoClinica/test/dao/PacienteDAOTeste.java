@@ -16,7 +16,7 @@ public class PacienteDAOTeste {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		Paciente paciente = new Paciente();
-		paciente.setNome("Isabella Novaes");
+		paciente.setNome("Isabella Novaes2");
 		paciente.setSexo("Feminino");
 		paciente.setDataNascimento(new java.sql.Date(sdf.parse("25/06/2003").getTime()));
 		paciente.setLogradouro("Rua Coronel Dulcídio");
