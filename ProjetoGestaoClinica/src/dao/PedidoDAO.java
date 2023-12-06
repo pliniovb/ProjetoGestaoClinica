@@ -48,7 +48,7 @@ public class PedidoDAO {
 
 		try {
 
-			st = conn.prepareStatement("select * from pedidos order by nome");
+			st = conn.prepareStatement("select * from pedidos order by nome_paciente");
 
 			rs = st.executeQuery();
 

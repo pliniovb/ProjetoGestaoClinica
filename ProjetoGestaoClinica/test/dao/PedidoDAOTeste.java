@@ -19,12 +19,13 @@ public class PedidoDAOTeste {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		Exame exame = new Exame();
+		exame.setCodigo(4);
 		exame.setNome("Exame de sangue");
-		exame.setValor(60);
-		exame.setOrientacoes("Fazer jejum");
+		exame.setValor(70);
+		exame.setOrientacoes("Fazer jejum de 8 a 12 horas");
 		
 		Paciente paciente = new Paciente();
-		paciente.setNome("Isabella Novaes");
+		paciente.setNome("João Pedro");
 		paciente.setSexo("Feminino");
 		paciente.setDataNascimento(new java.sql.Date(sdf.parse("25/06/2003").getTime()));
 		paciente.setLogradouro("Rua Coronel Dulcídio");
@@ -36,7 +37,7 @@ public class PedidoDAOTeste {
 		paciente.setFormaPagamento("Débito");
 		
 		Medico medico = new Medico();
-		medico.setCrm(12333);
+		medico.setCrm(1223);
 		medico.setNome("Maria Clara da Silva");
 		medico.setLogradouro("Avenida Monteiro Lobato");
 		medico.setBairro("Jardim Carvalho");
@@ -44,14 +45,14 @@ public class PedidoDAOTeste {
 		medico.setUf("PR");
 		medico.setNumero(195);
 		medico.setTelefone("(11)91234-5555");
-		medico.getEspecialidade().setCodigo(2);
+		medico.getEspecialidade().setCodigo(1);
 
 		Pedido pedido = new Pedido();
 		pedido.setExame(exame);
 		pedido.setPaciente(paciente);
 		pedido.setMedico(medico);
-		pedido.setDataRealizacao(new java.sql.Date(sdf.parse("21/12/2020").getTime()));
-		pedido.setValorPago(250);
+		pedido.setDataRealizacao(new java.sql.Date(sdf.parse("23/09/2022").getTime()));
+		pedido.setValorPago(300);
 
 		Connection conn = BancoDados.conectar();
 		new PedidoDAO(conn).cadastrar(pedido);
@@ -151,7 +152,7 @@ public class PedidoDAOTeste {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
 		try {
 			

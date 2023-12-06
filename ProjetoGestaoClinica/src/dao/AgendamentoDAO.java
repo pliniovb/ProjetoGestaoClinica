@@ -47,7 +47,7 @@ public class AgendamentoDAO {
 
 		try {
 
-			st = conn.prepareStatement("select * from agendamento order by nome");
+			st = conn.prepareStatement("select * from agendamento order by nome_paciente");
 
 			rs = st.executeQuery();
 

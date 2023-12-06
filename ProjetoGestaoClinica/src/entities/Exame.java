@@ -50,5 +50,9 @@ public class Exame {
 	public void setOrientacoes(String orientacoes) {
 		this.orientacoes = orientacoes;
 	}
+	
+	public String toString() {
+		return this.getNome();
+	}
 
 }

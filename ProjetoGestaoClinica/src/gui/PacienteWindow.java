@@ -36,6 +36,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class PacienteWindow extends JFrame {
 
@@ -70,6 +72,10 @@ public class PacienteWindow extends JFrame {
 	private JFormattedTextField txtTelefone;
 	private JSeparator separator;
 	private JButton btnCadastrar;
+	private JButton btnLimparCampos;
+	private JPanel painelPacientes;
+	private JTable tblPacientes;
+	private JScrollPane scrollPane;
 	
 	private MaskFormatter mascaraData;
 	private MaskFormatter mascaraTelefone;
@@ -103,6 +109,22 @@ public class PacienteWindow extends JFrame {
 		this.initComponents();
 		
 		this.pacienteService = new PacienteService();
+		
+		this.buscarPacientes();
+		this.limparComponentes();
+	}
+	
+	private void limparComponentes() {
+
+		this.txtNome.setText("");
+		this.txtDataNascimento.setText("");
+		this.txtLogradouro.setText("");
+		this.txtBairro.setText("");
+		this.txtCidade.setText("");
+		this.cbUf.setSelectedIndex(0);
+		this.txtNumero.setText("");
+		this.txtTelefone.setText("");
+		this.cbFormaPagamento.setSelectedIndex(0);
 	}
 	
 	
@@ -130,6 +152,41 @@ public class PacienteWindow extends JFrame {
 		}
 	}
 	
+	private void buscarPacientes() {
+
+		try {
+			
+			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+			
+			DefaultTableModel modelo = (DefaultTableModel) tblPacientes.getModel();
+			modelo.fireTableDataChanged();
+			modelo.setRowCount(0);
+	
+			List<Paciente> pacientes = this.pacienteService.buscarTodos();
+	
+			for (Paciente paciente : pacientes) {
+	
+				modelo.addRow(new Object[] { 
+					paciente.getNome(),
+					paciente.getSexo(),
+					formato.format(paciente.getDataNascimento()),
+					paciente.getLogradouro(),
+					paciente.getBairro(),
+					paciente.getCidade(),
+					paciente.getUf(),
+					paciente.getNumero(),
+					paciente.getTelefone(),
+					paciente.getFormaPagamento()
+				});
+			}
+		
+		} catch (SQLException | IOException e) {
+
+			JOptionPane.showMessageDialog(null, "Erro ao carregar os dados dos pacientes.", "Busca de Pacientes", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	
 	private void cadastrarPaciente() {
 
 		try {
@@ -147,10 +204,11 @@ public class PacienteWindow extends JFrame {
 			
 			paciente.setUf(this.cbUf.getSelectedItem());
 			paciente.setNumero(Integer.parseInt(this.txtNumero.getText()));
+			paciente.setTelefone(this.txtTelefone.getText());
 			paciente.setFormaPagamento(this.cbFormaPagamento.getSelectedItem());
 
 			this.pacienteService.cadastrar(paciente);
-			//this.buscarAlunos();
+			this.buscarPacientes();
 
 		} catch (SQLException | IOException | ParseException | NumberFormatException e) {
 
@@ -176,7 +234,7 @@ public class PacienteWindow extends JFrame {
 		
 		setTitle("Paciente");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 711, 556);
+		setBounds(100, 100, 711, 768);
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -324,11 +382,41 @@ public class PacienteWindow extends JFrame {
 			}
 		});
 		btnCadastrar.setFont(new Font("Arial", Font.PLAIN, 17));
-		btnCadastrar.setBounds(330, 440, 131, 35);
+		btnCadastrar.setBounds(140, 440, 152, 35);
 		contentPane.add(btnCadastrar);
 		
 		separator = new JSeparator();
 		separator.setBounds(10, 419, 667, 14);
 		contentPane.add(separator);
+		
+		btnLimparCampos = new JButton("Limpar campos");
+		btnLimparCampos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limparComponentes();
+			}
+		});
+		btnLimparCampos.setFont(new Font("Arial", Font.PLAIN, 17));
+		btnLimparCampos.setBounds(349, 440, 152, 35);
+		contentPane.add(btnLimparCampos);
+		
+		painelPacientes = new JPanel();
+		painelPacientes.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Pacientes", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 160)));
+		painelPacientes.setBounds(10, 486, 677, 213);
+		contentPane.add(painelPacientes);
+		painelPacientes.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 20, 657, 183);
+		painelPacientes.add(scrollPane);
+		
+		tblPacientes = new JTable();
+		scrollPane.setViewportView(tblPacientes);
+		tblPacientes.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Nome", "Sexo", "Data de nascimento", "Logradouro", "Bairro", "Cidade", "UF", "N\u00FAmero", "Telefone", "Forma de pagamento"
+			}
+		));
 	}
 }

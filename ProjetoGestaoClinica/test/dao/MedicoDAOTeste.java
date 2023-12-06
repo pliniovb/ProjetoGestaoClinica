@@ -14,18 +14,18 @@ public class MedicoDAOTeste {
 	public static void cadastrarMedicoTeste() throws SQLException, IOException {
 		
 		Especialidade especialidade = new Especialidade();
-		especialidade.setNome("Pediatra");
+		especialidade.setNome("Cirurgião");
 
 		Medico medico = new Medico();
-		medico.setCrm(12333);
-		medico.setNome("Maria Clara da Silva");
-		medico.setLogradouro("Avenida Monteiro Lobato");
+		medico.setCrm(1212666);
+		medico.setNome("Ana Laura De Souza");
+		medico.setLogradouro("Avenida Carlos José");
 		medico.setBairro("Jardim Carvalho");
 		medico.setCidade("Ponta Grossa");
 		medico.setUf("PR");
-		medico.setNumero(195);
-		medico.setTelefone("(11)91234-5555");
-		medico.getEspecialidade().setCodigo(2);
+		medico.setNumero(267);
+		medico.setTelefone("(11)92233-4545");
+		medico.getEspecialidade().setCodigo(7);
 		
 		Connection conn = BancoDados.conectar();
 		new MedicoDAO(conn).cadastrar(medico);
@@ -123,8 +123,8 @@ public class MedicoDAOTeste {
 
 		try {
 			
-			//MedicoDAOTeste.cadastrarMedicoTeste();
-			MedicoDAOTeste.buscarTodosMedicosTeste();
+			MedicoDAOTeste.cadastrarMedicoTeste();
+			//MedicoDAOTeste.buscarTodosMedicosTeste();
 			//MedicoDAOTeste.buscarPorCrmTeste();
 			//MedicoDAOTeste.buscarPorNomeTeste();
 			//MedicoDAOTeste.atualizarMedicoTeste();

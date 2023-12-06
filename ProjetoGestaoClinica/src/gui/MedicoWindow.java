@@ -68,13 +68,13 @@ public class MedicoWindow extends JFrame {
 	private JButton btnCadastrar;
 	private JButton btnLimparCampos;
 	private JSeparator separator;
+	private JPanel painelMedicos;
+	private JTable tblMedicos;
+	private JScrollPane scrollPane;
 	
 	private MaskFormatter mascaraTelefone;
 	private MedicoService medicoService;
 	private EspecialidadeService especialidadeService;
-	private JPanel painelMedicos;
-	private JTable tblMedicos;
-	private JScrollPane scrollPane;
 
 	public static void main(String[] args) {
 		try {
@@ -110,6 +110,7 @@ public class MedicoWindow extends JFrame {
 	
 	private void limparComponentes() {
 
+		this.txtCrm.setText("");
 		this.txtNome.setText("");
 		this.txtLogradouro.setText("");
 		this.txtBairro.setText("");
@@ -193,7 +194,7 @@ public class MedicoWindow extends JFrame {
 			medico.setBairro(this.txtBairro.getText());
 			medico.setCidade(this.txtCidade.getText());
 			medico.setUf(this.cbUf.getSelectedItem());
-			medico.setNumero(Integer.parseInt(this.txtNumero.toString()));
+			medico.setNumero(Integer.parseInt(this.txtNumero.getText()));
 			medico.setTelefone(this.txtTelefone.getText());
 			medico.setEspecialidade((Especialidade) this.cbEspecialidade.getSelectedItem());
 
@@ -202,7 +203,7 @@ public class MedicoWindow extends JFrame {
 
 		} catch (SQLException | IOException | NumberFormatException e) {
 
-			JOptionPane.showMessageDialog(null, "Erro ao cadastrar um novo aluno.", "Cadastro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Erro ao cadastrar um novo médico.", "Cadastro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
