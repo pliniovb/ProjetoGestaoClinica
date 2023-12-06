@@ -36,8 +36,6 @@ public class ExameWindow extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu menuArquivo;
 	private JMenuItem itemSair;
-	private JMenu menuAjuda;
-	private JMenuItem itemSobre;
 	private JTextField txtNomeExame;
 	private JTextField txtValor;
 	private JTextArea txtOrientacoes;
@@ -51,6 +49,8 @@ public class ExameWindow extends JFrame {
 	private JPanel painelExames;
 	private JTable tblExames;
 	private JScrollPane scrollPane;
+	
+	private PrincipalWindow principalWindow;
 
 	public static void main(String[] args) {
 		try {
@@ -79,6 +79,8 @@ public class ExameWindow extends JFrame {
 		
 		this.buscarExames();
 		this.limparComponentes();
+		
+		this.principalWindow = principalWindow;
 		
 	}
 	
@@ -158,11 +160,6 @@ public class ExameWindow extends JFrame {
 		});
 		menuArquivo.add(itemSair);
 		
-		menuAjuda = new JMenu("Ajuda");
-		menuBar.add(menuAjuda);
-		
-		itemSobre = new JMenuItem("Sobre");
-		menuAjuda.add(itemSobre);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

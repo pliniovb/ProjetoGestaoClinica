@@ -47,8 +47,6 @@ public class PedidoWindow extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu menuArquivo;
 	private JMenuItem itemSair;
-	private JMenu menuAjuda;
-	private JMenuItem itemSobre;
 	private JLabel lblCodigoExame;
 	private JLabel lblNomePaciente;
 	private JLabel lblCrmMedico;
@@ -72,6 +70,7 @@ public class PedidoWindow extends JFrame {
 	private PacienteService pacienteService;
 	private PedidoService pedidoService;
 	
+	private PrincipalWindow principalWindow;
 
 	
 	public static void main(String[] args) {
@@ -108,6 +107,8 @@ public class PedidoWindow extends JFrame {
 		this.buscarMedicos();
 		this.buscarPedidos();
 		this.limparComponentes();
+		
+		this.principalWindow = principalWindow;
 		
 	}
 	
@@ -259,12 +260,7 @@ public class PedidoWindow extends JFrame {
 			}
 		});
 		menuArquivo.add(itemSair);
-		
-		menuAjuda = new JMenu("Ajuda");
-		menuBar.add(menuAjuda);
-		
-		itemSobre = new JMenuItem("Sobre");
-		menuAjuda.add(itemSobre);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

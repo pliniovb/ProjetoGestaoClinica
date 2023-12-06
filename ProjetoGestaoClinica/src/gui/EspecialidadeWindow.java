@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,8 +37,6 @@ public class EspecialidadeWindow extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu menuArquivo;
 	private JMenuItem itemSair;
-	private JMenu menuAjuda;
-	private JMenuItem itemSobre;
 	private JTextField txtNomeEspecialidade;
 	private JLabel lblNomeEspecialidade;
 	private JButton btnCadastrar;
@@ -46,6 +46,7 @@ public class EspecialidadeWindow extends JFrame {
 	private JScrollPane scrollPane;
 	
 	private EspecialidadeService especialidadeService;
+	private PrincipalWindow principalWindow;
 
 
 	public static void main(String[] args) {
@@ -74,6 +75,8 @@ public class EspecialidadeWindow extends JFrame {
 		
 		this.buscarEspecialidades();
 		this.limparComponente();
+		
+		this.principalWindow = principalWindow;
 		
 	}
 	
@@ -150,11 +153,6 @@ public class EspecialidadeWindow extends JFrame {
 		});
 		menuArquivo.add(itemSair);
 		
-		menuAjuda = new JMenu("Ajuda");
-		menuBar.add(menuAjuda);
-		
-		itemSobre = new JMenuItem("Sobre");
-		menuAjuda.add(itemSobre);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

@@ -44,8 +44,6 @@ public class MedicoWindow extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu menuArquivo;
 	private JMenuItem itemSair;
-	private JMenu menuAjuda;
-	private JMenuItem itemSobre;
 	private JTextField txtCrm;
 	private JTextField txtNome;
 	private JTextField txtLogradouro;
@@ -75,6 +73,8 @@ public class MedicoWindow extends JFrame {
 	private MaskFormatter mascaraTelefone;
 	private MedicoService medicoService;
 	private EspecialidadeService especialidadeService;
+	
+	private PrincipalWindow principalWindow;
 
 	public static void main(String[] args) {
 		try {
@@ -105,6 +105,8 @@ public class MedicoWindow extends JFrame {
 		this.buscarEspecialidades();
 		this.buscarMedicos();
 		this.limparComponentes();
+		
+		this.principalWindow = principalWindow;
 		
 	}
 	
@@ -231,12 +233,7 @@ public class MedicoWindow extends JFrame {
 			}
 		});
 		menuArquivo.add(itemSair);
-		
-		menuAjuda = new JMenu("Ajuda");
-		menuBar.add(menuAjuda);
-		
-		itemSobre = new JMenuItem("Sobre");
-		menuAjuda.add(itemSobre);
+	
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

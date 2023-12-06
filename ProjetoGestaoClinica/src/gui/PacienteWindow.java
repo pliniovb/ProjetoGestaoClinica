@@ -33,6 +33,8 @@ import javax.swing.JButton;
 import javax.swing.JSeparator;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -46,8 +48,6 @@ public class PacienteWindow extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu menuArquivo;
 	private JMenuItem itemSair;
-	private JMenu menuAjuda;
-	private JMenuItem itemSobre;
 	private JTextField txtNome;
 	private JTextField txtLogradouro;
 	private JTextField txtNumero;
@@ -81,6 +81,8 @@ public class PacienteWindow extends JFrame {
 	private MaskFormatter mascaraTelefone;
 	private PacienteService pacienteService;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
+	private PrincipalWindow principalWindow;
 
 	
 	public static void main(String[] args) {
@@ -112,6 +114,8 @@ public class PacienteWindow extends JFrame {
 		
 		this.buscarPacientes();
 		this.limparComponentes();
+		
+		this.principalWindow = principalWindow;
 	}
 	
 	private void limparComponentes() {
@@ -250,11 +254,6 @@ public class PacienteWindow extends JFrame {
 		});
 		menuArquivo.add(itemSair);
 		
-		menuAjuda = new JMenu("Ajuda");
-		menuBar.add(menuAjuda);
-		
-		itemSobre = new JMenuItem("Sobre");
-		menuAjuda.add(itemSobre);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -418,5 +417,7 @@ public class PacienteWindow extends JFrame {
 				"Nome", "Sexo", "Data de nascimento", "Logradouro", "Bairro", "Cidade", "UF", "N\u00FAmero", "Telefone", "Forma de pagamento"
 			}
 		));
+		
+		setLocationRelativeTo(null);
 	}
 }

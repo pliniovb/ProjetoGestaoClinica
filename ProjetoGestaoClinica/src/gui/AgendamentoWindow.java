@@ -8,14 +8,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import entities.Agendamento;
-import entities.Especialidade;
 import entities.Medico;
 import entities.Paciente;
 import service.AgendamentoService;
 import service.MedicoService;
 import service.PacienteService;
 
-import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
@@ -26,26 +25,45 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class AgendamentoWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtDataConsulta;
-	private JTextField txtHoraConsulta;
+	private JMenuBar menuBar;
+	private JMenu menuArquivo;
+	private JMenuItem itemSair;
+	private JLabel lblNomePaciente;
+	private JLabel lblMedico;
+	private JLabel lblDataConsulta;
+	private JLabel lblHoraConsulta;
+	private JFormattedTextField txtDataConsulta;
+	private JFormattedTextField txtHoraConsulta;
 	private JComboBox<Medico> cbMedico;
 	private JComboBox<Paciente> cbPaciente;
+	private JButton btnAgendar;
+	private JButton btnLimparCampos;
 	
 	private AgendamentoService agendamentoService;
 	private MedicoService medicoService;
 	private PacienteService pacienteService;
 	private MaskFormatter mascaraData;
+	private MaskFormatter mascaraHora;
 
+	private PrincipalWindow principalWindow;
 
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -61,14 +79,18 @@ public class AgendamentoWindow extends JFrame {
 	public AgendamentoWindow() {
 			
 			this.criarMascaraData();
+			this.criarMascaraHora();
 			this.initComponents();
 			
 			this.agendamentoService = new AgendamentoService();
 			this.medicoService = new MedicoService();
 			this.pacienteService = new PacienteService();
+			
 			this.buscarMedicos();
 			this.buscarPacientes();
 			this.limparComponentes();
+			
+			this.principalWindow = principalWindow;
 		}
 	
 	private void limparComponentes() {
@@ -82,12 +104,14 @@ public class AgendamentoWindow extends JFrame {
 	private void agendarConsulta() {
 
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");			
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");		
+			
 			Agendamento agendamento = new Agendamento();
 			agendamento.setPaciente((Paciente)this.cbPaciente.getSelectedItem());
 			agendamento.setMedico((Medico)this.cbMedico.getSelectedItem());
 			agendamento.setDataConsulta(new java.sql.Date(sdf.parse(this.txtDataConsulta.getText()).getTime()));
-			agendamento.setHora(txtHoraConsulta.getText());
+			agendamento.setHora(this.txtHoraConsulta.getText());
 
 			
 
@@ -98,6 +122,7 @@ public class AgendamentoWindow extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro ao cadastrar um novo agendamento.", "Cadastro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
 	
 	public void buscarMedicos() {
 		
@@ -145,69 +170,103 @@ public class AgendamentoWindow extends JFrame {
 		}
 	}
 	
+	private void criarMascaraHora() {
 
-	/**
-	 * Create the frame.
-	 */
+		try {
+
+			this.mascaraHora = new MaskFormatter("##:##");
+
+		} catch (ParseException e) {
+
+			System.out.println("ERRO: " + e.getMessage());
+		}
+	}
+	
+	private void finalizarAplicacao() {
+
+		System.exit(0);
+	}
+	
 	public void initComponents() {
+		
+		setTitle("Agendamento");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 393, 338);
+		
+		menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		menuArquivo = new JMenu("Arquivo");
+		menuBar.add(menuArquivo);
+		
+		itemSair = new JMenuItem("Sair");
+		itemSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finalizarAplicacao();
+			}
+		});
+		menuArquivo.add(itemSair);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNomePaciente = new JLabel("Paciente");
-		lblNomePaciente.setBounds(14, 38, 69, 14);
+		lblNomePaciente = new JLabel("Paciente");
+		lblNomePaciente.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblNomePaciente.setBounds(14, 26, 69, 14);
 		contentPane.add(lblNomePaciente);
 		
-		this.cbMedico = new JComboBox<Medico>();
-		cbMedico.setBounds(103, 66, 211, 22);
+		cbMedico = new JComboBox<Medico>();
+		cbMedico.setBounds(93, 66, 211, 23);
 		contentPane.add(cbMedico);
 		
-		JLabel lblMedico = new JLabel("Medico");
-		lblMedico.setBounds(14, 70, 46, 14);
+		lblMedico = new JLabel("Medico");
+		lblMedico.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblMedico.setBounds(14, 67, 69, 18);
 		contentPane.add(lblMedico);
 		
 		txtDataConsulta = new JFormattedTextField(mascaraData);
-		txtDataConsulta.setBounds(103, 102, 211, 20);
+		txtDataConsulta.setBounds(147, 104, 157, 23);
 		contentPane.add(txtDataConsulta);
 		txtDataConsulta.setColumns(10);
 		
-		JLabel lblDataConsulta = new JLabel("Data da Consulta");
-		lblDataConsulta.setBounds(14, 105, 86, 14);
+		lblDataConsulta = new JLabel("Data da Consulta");
+		lblDataConsulta.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblDataConsulta.setBounds(14, 107, 124, 14);
 		contentPane.add(lblDataConsulta);
 		
-		this.cbPaciente = new JComboBox<Paciente>();
-		cbPaciente.setBounds(103, 34, 211, 22);
+		cbPaciente = new JComboBox<Paciente>();
+		cbPaciente.setBounds(93, 23, 211, 23);
 		contentPane.add(cbPaciente);
 		
-		txtHoraConsulta = new JTextField();
-		txtHoraConsulta.setBounds(103, 133, 211, 20);
-		contentPane.add(txtHoraConsulta);
-		txtHoraConsulta.setColumns(10);
-		
-		JLabel lblHoraConsulta = new JLabel("Horário");
-		lblHoraConsulta.setBounds(14, 136, 46, 14);
+		lblHoraConsulta = new JLabel("Horário");
+		lblHoraConsulta.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblHoraConsulta.setBounds(14, 145, 69, 17);
 		contentPane.add(lblHoraConsulta);
 		
-		JButton btnAgendar = new JButton("Agendar");
+		btnAgendar = new JButton("Agendar");
+		btnAgendar.setFont(new Font("Arial", Font.PLAIN, 17));
+		btnAgendar.setBounds(14, 207, 152, 35);
 		btnAgendar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				agendarConsulta();
 			}
 		});
-		btnAgendar.setBounds(14, 227, 89, 23);
 		contentPane.add(btnAgendar);
 		
-		JButton btnLimparCampos = new JButton("LimparCampos");
+		btnLimparCampos = new JButton("Limpar campos");
+		btnLimparCampos.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnLimparCampos.setBounds(207, 208, 152, 35);
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limparComponentes();;
 			}
 		});
-		btnLimparCampos.setBounds(195, 176, 119, 23);
 		contentPane.add(btnLimparCampos);
+		
+		txtHoraConsulta = new JFormattedTextField(mascaraHora);
+		txtHoraConsulta.setBounds(93, 143, 210, 23);
+		contentPane.add(txtHoraConsulta);
 	}
 }
